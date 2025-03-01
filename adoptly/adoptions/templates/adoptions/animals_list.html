@@ -1,0 +1,35 @@
+{% extends 'adoptions/base.html' %}
+
+{% block title %}Available Animals{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-4 mb-3">Meet Your New Best Friend</h1>
+
+    <!-- Animal Cards -->
+    <div class="row">
+        {% for animal in animals %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg">
+                {% if animal.image %}
+                    <img class="card-img-top" src="{{ animal.image.url }}" alt="{{ animal.name }}">
+                {% else %}
+                    <img class="card-img-top" src="/media/default.jpg" alt="No Image Available">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ animal.name }}</h5>
+                    <p class="card-text"><strong>Species:</strong> {{ animal.species }}</p>
+                    <p class="card-text"><strong>Breed:</strong> {{ animal.breed }}</p>
+                    <p class="card-text"><strong>Age:</strong> {{ animal.age }} years</p>
+                    <a href="{% url 'adoption_request' animal.id %}" class="btn btn-primary">Adopt {{ animal.name }}</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="lead">No animals available for adoption at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
