@@ -10,3 +10,8 @@ class AdoptionRequestForm(forms.ModelForm):
             'reason_for_adoption': forms.Textarea(attrs={'rows': 3}),
             'experience_with_pets': forms.Textarea(attrs={'rows': 3}),
         }
+
+
+
+class BreedDetectionForm(forms.Form):
+    image = forms.ImageField(label="Upload an image of the dog")

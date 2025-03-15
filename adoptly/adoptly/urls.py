@@ -5,7 +5,7 @@ from adoptions.views import AnimalViewSet
 from adoptions.views import animals_list, home
 from django.conf import settings
 from django.conf.urls.static import static
-from adoptions.views import adoption_request, success_page
+from adoptions.views import adoption_request, success_page, breed_detection
 
 router = DefaultRouter()
 router.register(r'animals', AnimalViewSet)  # /api/animals/
@@ -18,6 +18,7 @@ urlpatterns = [
     path('animals_list/', animals_list, name='animals_list'),  # Move animals list
     path('adopt/<int:animal_id>/', adoption_request, name='adoption_request'),
     path('success/', success_page, name='success_page'),
+    path('breed_detection/', breed_detection, name='breed_detection'),
 ]
 
 # Add this line to serve media files

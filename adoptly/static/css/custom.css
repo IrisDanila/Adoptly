@@ -1,11 +1,35 @@
+/* Define primary colors as CSS variables */
+:root {
+    --primary-bg-color: #FBEAE7; /* Background color */
+    --primary-color: #B2456E;    /* Primary color */
+    --primary-hover-color: #A03E5E; /* Hover color */
+}
+
 /* Style for the form container */
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
     border-radius: 10px; /* Rounded corners */
+    background-color: var(--primary-bg-color); /* Use primary background color */
 }
 
 /* Hover effect for the form */
 .card:hover {
     transform: scale(1.05); /* Slightly enlarge the form */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Shadow appears only on hover */
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--primary-color); /* Use primary color */
+    border-color: var(--primary-color); /* Use primary color */
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-color); /* Use hover color */
+    border-color: var(--primary-hover-color); /* Use hover color */
+}
+
+/* Body background color */
+body {
+    background-color: var(--primary-bg-color); /* Use primary background color */
 }

@@ -2,7 +2,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import viewsets
 from .models import Animal, AdoptionRequest
 from .serializers import AnimalSerializer
-from .forms import AdoptionRequestForm
+from .forms import AdoptionRequestForm, BreedDetectionForm
+from .utils.breed_detection import BreedDetector
+
 
 class AnimalViewSet(viewsets.ModelViewSet):
     queryset = Animal.objects.all()
@@ -34,3 +36,24 @@ def adoption_request(request, animal_id):
 
 def success_page(request):
     return render(request, 'adoptions/success.html')
+
+
+
+
+from django.shortcuts import render
+from .forms import BreedDetectionForm
+from .utils.breed_detection import BreedDetector
+
+def breed_detection(request):
+    breed = None  # Initialize the breed variable
+    if request.method == 'POST':
+        form = BreedDetectionForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            detector = BreedDetector()
+            result = detector.detect_breed(image)  # Call the detect_breed method
+            breed = result  # Assign the result to the breed variable
+    else:
+        form = BreedDetectionForm()
+
+    return render(request, 'adoptions/breed_detection.html', {'form': form, 'breed': breed})
