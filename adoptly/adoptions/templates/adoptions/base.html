@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %} <!-- Load the static tag library -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Adoptly{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"> <!-- Link to custom CSS -->
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand btn btn-primary" href="{% url 'home' %}">Adoptly</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Adoptly</a>
     </nav>
     <div class="container mt-4">
         {% block content %}{% endblock %}

@@ -1,14 +1,23 @@
 {% extends 'adoptions/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Adopt {{ animal.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center mt-4 mb-3">Adopt {{ animal.name }}</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit Adoption Request</button>
-    </form>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Adopt {{ animal.name }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-block">Submit Adoption Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

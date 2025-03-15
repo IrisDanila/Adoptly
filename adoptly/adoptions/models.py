@@ -21,14 +21,14 @@ class Animal(models.Model):
     def __str__(self):
         return self.name
 
-from django.db import models
-
 class AdoptionRequest(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
-    message = models.TextField(blank=True)
+    about_you = models.TextField(blank=True)
+    reason_for_adoption = models.TextField(blank=True)  # New field
+    experience_with_pets = models.TextField(blank=True)  # New field
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
