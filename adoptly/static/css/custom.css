@@ -3,33 +3,181 @@
     --primary-bg-color: #FBEAE7; /* Background color */
     --primary-color: #B2456E;    /* Primary color */
     --primary-hover-color: #A03E5E; /* Hover color */
+    --text-color: #552619;       /* Text color */
+    --secondary-bg-color: #FFFFFF; /* Secondary background color */
 }
 
-/* Style for the form container */
-.card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
-    border-radius: 10px; /* Rounded corners */
+/* General body styling */
+body {
     background-color: var(--primary-bg-color); /* Use primary background color */
+    color: var(--text-color); /* Use text color */
+    font-family: 'Arial', sans-serif;
 }
 
-/* Hover effect for the form */
-.card:hover {
-    transform: scale(1.05); /* Slightly enlarge the form */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Shadow appears only on hover */
+/* Navbar styling */
+.navbar {
+    background-color: var(--primary-color); /* Use primary color for navbar */
 }
 
-/* Button styles */
-.btn-primary {
+.navbar-brand {
+    font-weight: bold;
+    color: var(--secondary-bg-color); /* White text for the brand */
+}
+
+.navbar-brand:hover {
+    color: var(--primary-hover-color); /* Hover effect for brand */
+}
+
+.navbar .btn-light {
+    color: var(--primary-color); /* Primary color for text */
+    border-color: var(--primary-color); /* Border color */
+}
+
+.navbar .btn-light:hover {
+    background-color: var(--primary-hover-color); /* Hover background */
+    color: var(--secondary-bg-color); /* White text on hover */
+}
+
+/* Jumbotron styling */
+.jumbotron {
     background-color: var(--primary-color); /* Use primary color */
-    border-color: var(--primary-color); /* Use primary color */
+    color: var(--secondary-bg-color); /* White text */
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.jumbotron h1 {
+    font-weight: bold;
+    color: var(--secondary-bg-color); /* White text */
+}
+
+.jumbotron .btn-light {
+    color: var(--primary-color); /* Primary color for text */
+    border-color: var(--primary-color); /* Border color */
+}
+
+.jumbotron .btn-light:hover {
+    background-color: var(--primary-hover-color); /* Hover background */
+    color: var(--secondary-bg-color); /* White text on hover */
+}
+
+/* About Section */
+.container {
+    background: var(--secondary-bg-color);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 50px;
+    color: var(--text-color); /* Text color for paragraphs */
+}
+
+.container h2 {
+    color: var(--primary-color); /* Primary color for headings */
+    font-weight: bold;
+}
+
+/* Call to Action Button */
+.btn-success {
+    background-color: var(--primary-color); /* Use primary color */
+    border-color: var(--primary-color); /* Border color */
+}
+
+.btn-success:hover {
+    background-color: var(--primary-hover-color); /* Hover background */
+    border-color: var(--primary-hover-color); /* Hover border */
+}
+
+/* Footer styling */
+footer {
+    background-color: var(--primary-color); /* Use primary color */
+    color: var(--secondary-bg-color); /* White text */
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+/* Card styling */
+.card {
+    background-color: var(--secondary-bg-color); /* White background */
+    border: 1px solid var(--primary-color); /* Border with primary color */
+    border-radius: 10px; /* Rounded corners */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    object-fit: cover;
+    height: 200px; /* Set a fixed height for consistency */
+    width: 100%;
+}
+
+.card-title {
+    color: var(--primary-color); /* Primary color for titles */
+    font-weight: bold;
+}
+
+.card-text {
+    color: var(--text-color); /* Text color */
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: var(--primary-color); /* Primary color */
+    border-color: var(--primary-color); /* Border color */
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-hover-color); /* Use hover color */
-    border-color: var(--primary-hover-color); /* Use hover color */
+    background-color: var(--primary-hover-color); /* Hover color */
+    border-color: var(--primary-hover-color); /* Hover border */
 }
 
-/* Body background color */
-body {
-    background-color: var(--primary-bg-color); /* Use primary background color */
+/* Empty state styling */
+.lead {
+    color: var(--text-color); /* Text color for empty state */
+    font-weight: bold;
+}
+
+/* h1 styling */
+h1 {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Preview container styling */
+.preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-bg-color);
+    border: 2px dashed var(--primary-color);
+    border-radius: 10px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.preview-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+/* Form container styling */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Alert styling */
+.alert {
+    font-size: 1.2rem;
+    font-weight: bold;
 }

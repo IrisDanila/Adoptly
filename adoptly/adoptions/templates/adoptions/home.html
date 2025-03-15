@@ -4,15 +4,15 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="jumbotron text-center bg-primary text-white">
-    <h1 class="display-3 font-weight-bold">Welcome to Adoptly</h1>
+<div class="jumbotron text-center">
+    <h1 class="display-3">Welcome to Adoptly</h1>
     <p class="lead">Find your perfect furry, feathery, or scaly friend today!</p>
     <a href="{% url 'animals_list' %}" class="btn btn-light btn-lg">Browse Available Animals</a>
 </div>
 
 <!-- About Section -->
 <div class="container text-center mt-5">
-    <h2 class="font-weight-bold">Why Choose Adoption?</h2>
+    <h2>Why Choose Adoption?</h2>
     <p class="lead">Adopting a pet saves lives and brings unconditional love into your home. At Adoptly, we connect loving families with animals in need.</p>
 </div>
 
@@ -20,5 +20,4 @@
 <div class="text-center mt-5">
     <a href="{% url 'animals_list' %}" class="btn btn-success btn-lg px-5 py-3">Start Adopting Now</a>
 </div>
-
 {% endblock %}

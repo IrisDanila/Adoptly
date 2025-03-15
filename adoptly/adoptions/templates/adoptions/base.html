@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}"> <!-- Link to custom CSS -->
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="{% url 'home' %}">Adoptly</a>
         <div class="ml-auto">
             <a class="btn btn-light" href="{% url 'breed_detection' %}">Breed Detection</a>
@@ -18,5 +18,8 @@
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
+    <footer>
+        <p>&copy; 2025 Adoptly. All rights reserved.</p>
+    </footer>
 </body>
 </html>

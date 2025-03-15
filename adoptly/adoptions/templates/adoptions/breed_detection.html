@@ -1,106 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dog Breed Detector</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #FBEAE7;
-            color: #552619;
-        }
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 50px;
-        }
-        h1 {
-            color: #B2456E;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .btn-primary {
-            background-color: #B2456E;
-            border-color: #B2456E;
-        }
-        .btn-primary:hover {
-            background-color: #A03E5E;
-            border-color: #A03E5E;
-        }
-        .preview-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #FBEAE7;
-            border: 2px dashed #B2456E;
-            border-radius: 10px;
-            height: 300px;
-            overflow: hidden;
-        }
-        .preview-container img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: cover;
-        }
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .alert {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Dog Breed Detector</h1>
-        <div class="row">
-            <!-- Image Preview Section -->
-            <div class="col-md-6">
-                <div class="preview-container" id="image-preview">
-                    <p class="text-center text-secondary">Upload an image to preview it here</p>
-                </div>
-            </div>
-            <!-- Form and Result Section -->
-            <div class="col-md-6 form-container">
-                <form method="post" enctype="multipart/form-data" class="mt-4">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary w-100">Detect Breed</button>
-                </form>
+{% extends 'adoptions/base.html' %}
 
-                {% if breed %}
-                <div class="alert alert-success mt-4 text-center">
-                    <strong>Predicted Breed:</strong> {{ breed }}
-                </div>
-                {% endif %}
+{% block content %}
+<div class="container">
+    <h1>Dog Breed Detector</h1>
+    <div class="row">
+        <!-- Image Preview Section -->
+        <div class="col-md-6">
+            <div class="preview-container" id="image-preview">
+                <p class="text-center text-secondary">Upload an image to preview it here</p>
+            </div>
+        </div>
+        <!-- Form and Result Section -->
+        <div class="col-md-6 form-container">
+            <form id="breed-detection-form" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100">Detect Breed</button>
+            </form>
+
+            <div id="breed-result" class="alert alert-success mt-4 text-center d-none">
+                <strong>Predicted Breed:</strong> <span id="predicted-breed"></span>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // JavaScript to preview the uploaded image
-        const imageInput = document.querySelector('input[type="file"]');
-        const imagePreview = document.getElementById('image-preview');
+<script>
+    // JavaScript to preview the uploaded image
+    const imageInput = document.querySelector('input[type="file"]');
+    const imagePreview = document.getElementById('image-preview');
 
-        imageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image">`;
-                };
-                reader.readAsDataURL(file);
+    imageInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image">`;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.innerHTML = `<p class="text-center text-secondary">Upload an image to preview it here</p>`;
+        }
+    });
+
+    // JavaScript to handle form submission via AJAX
+    const form = document.getElementById('breed-detection-form');
+    const breedResultDiv = document.getElementById('breed-result');
+    const predictedBreedSpan = document.getElementById('predicted-breed');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent the page from reloading
+
+        const formData = new FormData(form); // Collect form data
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Parse JSON response
+                predictedBreedSpan.textContent = data.breed; // Update the breed result
+                breedResultDiv.classList.remove('d-none'); // Show the result div
             } else {
-                imagePreview.innerHTML = `<p class="text-center text-secondary">Upload an image to preview it here</p>`;
+                console.error('Error:', response.statusText);
             }
-        });
-    </script>
-</body>
-</html>
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+</script>
+{% endblock %}

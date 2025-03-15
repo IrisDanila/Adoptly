@@ -39,21 +39,22 @@ def success_page(request):
 
 
 
-
-from django.shortcuts import render
-from .forms import BreedDetectionForm
-from .utils.breed_detection import BreedDetector
+from django.http import JsonResponse
 
 def breed_detection(request):
-    breed = None  # Initialize the breed variable
     if request.method == 'POST':
         form = BreedDetectionForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
             detector = BreedDetector()
             result = detector.detect_breed(image)  # Call the detect_breed method
-            breed = result  # Assign the result to the breed variable
+            # Return JSON response for AJAX requests
+            return JsonResponse({'breed': result})
+        else:
+            # Return errors as JSON if form is invalid
+            return JsonResponse({'error': 'Invalid form data'}, status=400)
     else:
         form = BreedDetectionForm()
 
-    return render(request, 'adoptions/breed_detection.html', {'form': form, 'breed': breed})
+    # Render the HTML template for non-AJAX requests
+    return render(request, 'adoptions/breed_detection.html', {'form': form})
