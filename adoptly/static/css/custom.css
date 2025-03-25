@@ -68,11 +68,11 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
     margin-top: 50px;
-    color: var(--text-color); /* Text color for paragraphs */
+    color: var(--text-color); 
 }
 
 .container h2 {
-    color: var(--primary-color); /* Primary color for headings */
+    color: var(--primary-color); 
     font-weight: bold;
 }
 
