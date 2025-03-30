@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.db import migrations
+from django.contrib.auth import get_user_model
 
 class Animal(models.Model):
     SPECIES_CHOICES = [
@@ -33,3 +36,42 @@ class AdoptionRequest(models.Model):
 
     def __str__(self):
         return f"Adoption Request for {self.animal.name} by {self.name}"
+    
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    is_admin = models.BooleanField(default=False)
+    is_regular_user = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    def __str__(self):
+        return self.email
+    
+
+
+# creating the admin 
+
+def create_admin_user(apps, schema_editor):
+    User = get_user_model()
+    if not User.objects.filter(email="admin@adoptly.com").exists():
+        User.objects.create_superuser(
+            email="admin@adoptly.com",
+            username="admin",
+            password="adminpassword",
+            is_admin=True,
+            is_regular_user=False,
+        )
+
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('adoptions', '0001_initial'),  # Replace with the actual name of your initial migration file
+    ]
+
+    operations = [
+        migrations.RunPython(create_admin_user),
+    ]
+
+

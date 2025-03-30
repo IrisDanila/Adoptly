@@ -7,12 +7,38 @@
     <title>{% block title %}Adoptly{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}"> <!-- Link to custom CSS -->
+    <style>
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .status-dot.green {
+            background-color: lightgreen;
+        }
+        .status-dot.gray {
+            background-color: gray;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="{% url 'home' %}">Adoptly</a>
         <div class="ml-auto">
             <a class="btn btn-light" href="{% url 'breed_detection' %}">Breed Detection</a>
+            {% if user.is_authenticated %}
+        {% if user.is_admin %}
+            <a class="btn btn-light" href="{% url 'requests' %}">Requests</a>
+        {% endif %}
+        <a class="btn btn-light" href="{% url 'logout' %}">Logout</a>
+        <span class="status-dot green" title="Logged in"></span>
+    {% else %}
+        <a class="btn btn-light" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-light" href="{% url 'signup' %}">Signup</a>
+        <span class="status-dot gray" title="Not logged in"></span>
+    {% endif %}
         </div>
     </nav>
     <div class="container mt-4">

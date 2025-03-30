@@ -1,0 +1,42 @@
+{% extends 'adoptions/base.html' %}
+
+{% block title %}Adoption Requests{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Adoption Requests</h1>
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Animal</th>
+                <th>Requester Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in adoption_requests %}
+            <tr>
+                <td>{{ request.animal.name }}</td>
+                <td>{{ request.name }}</td>
+                <td>{{ request.email }}</td>
+                <td>{{ request.phone }}</td>
+                <td>
+                    <form method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                        <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                    </form>
+                    <form method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                        <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

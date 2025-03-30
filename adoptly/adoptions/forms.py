@@ -15,3 +15,35 @@ class AdoptionRequestForm(forms.ModelForm):
 
 class BreedDetectionForm(forms.Form):
     image = forms.ImageField(label="Upload an image of the dog")
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
+
+class UserSignupForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'password1', 'password2']
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.EmailField(label="Email")
+
+from .models import Animal
+
+class AnimalForm(forms.ModelForm):
+    class Meta:
+        model = Animal
+        fields = [
+            'name',
+            'date_of_birth',
+            'age',
+            'species',
+            'breed',
+            'description',
+            'image',
+            'is_available',
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }

@@ -7,6 +7,12 @@
 <div class="container">
     <h1 class="text-center mt-4 mb-3">Meet Your New Best Friend</h1>
 
+    {% if user.is_authenticated and user.is_admin %}
+        <div class="text-right mb-3">
+            <a href="{% url 'add_animal' %}" class="btn btn-success">Add Animal</a>
+        </div>
+    {% endif %}
+
     <!-- Animal Cards -->
     <div class="row">
         {% for animal in animals %}
@@ -33,4 +39,4 @@
         {% endfor %}
     </div>
 </div>
-{% endblock %}
+{% endblock %}</div>

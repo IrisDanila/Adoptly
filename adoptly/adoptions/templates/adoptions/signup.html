@@ -1,0 +1,14 @@
+{% extends 'adoptions/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Sign Up</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+    </form>
+</div>
+{% endblock %}
