@@ -6,7 +6,8 @@ from adoptions.views import animals_list, home
 from django.conf import settings
 from django.conf.urls.static import static
 from adoptions.views import adoption_request, success_page, breed_detection
-from adoptions.views import signup_view, login_view, logout_view, requests_view, add_animal
+from adoptions.views import signup_view, login_view, logout_view, requests_view, add_animal, delete_animal
+from django.shortcuts import get_object_or_404
 
 
 router = DefaultRouter()
@@ -27,6 +28,7 @@ urlpatterns = [
     #path('accounts/', include('django.contrib.auth.urls')),  # For login/logout views
     path('requests/', requests_view, name='requests'),
     path('add_animal/', add_animal, name='add_animal'),
+    path('delete_animal/', delete_animal, name='delete_animal'),
 ]
 
 # Add this line to serve media files

@@ -124,3 +124,15 @@ def add_animal(request):
     else:
         form = AnimalForm()
     return render(request, 'adoptions/add_animal.html', {'form': form})
+
+
+@user_passes_test(lambda u: u.is_authenticated and u.is_admin)
+def delete_animal(request):
+    if request.method == 'POST':
+        animal_name = request.POST.get('animal_name')
+        animal = get_object_or_404(Animal, name=animal_name)
+        animal.delete()
+        return redirect('animals_list')
+
+    animals = Animal.objects.all()  # Fetch all animals for the dropdown
+    return render(request, 'adoptions/delete_animal.html', {'animals': animals})

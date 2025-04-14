@@ -1,0 +1,15 @@
+{% extends 'adoptions/base.html' %}
+
+{% block content %}
+<h1>Delete Animal</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label for="animal_name">Select an animal to delete:</label>
+    <select name="animal_name" id="animal_name" required>
+        {% for animal in animals %}
+            <option value="{{ animal.name }}">{{ animal.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+{% endblock %}
