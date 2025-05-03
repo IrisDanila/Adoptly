@@ -15,6 +15,37 @@
 {% endif %}
     
 
+<!-- Filter Form -->
+<form method="GET" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="species">Filter by Species:</label>
+            <select name="species" id="species" class="form-control">
+                <option value="">All Species</option>
+                {% for species in species_list %}
+                <option value="{{ species }}" {% if species == request.GET.species %}selected{% endif %}>
+                    {{ species }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="breed">Filter by Breed:</label>
+            <select name="breed" id="breed" class="form-control">
+                <option value="">All Breeds</option>
+                {% for breed in breed_list %}
+                <option value="{{ breed }}" {% if breed == request.GET.breed %}selected{% endif %}>
+                    {{ breed }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-pink">Filter</button>
+        </div>
+    </div>
+</form>
+
     <!-- Animal Cards -->
     <div class="row">
         {% for animal in animals %}

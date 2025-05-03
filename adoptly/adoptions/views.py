@@ -14,10 +14,27 @@ class AnimalViewSet(viewsets.ModelViewSet):
 
 def animals_list(request):
     search_query = request.GET.get('q', '')
+    species_filter = request.GET.get('species', '')
+    breed_filter = request.GET.get('breed', '')
+
     animals = Animal.objects.filter(is_available=True)
+
     if search_query:
         animals = animals.filter(name__icontains=search_query)
-    return render(request, 'adoptions/animals_list.html', {'animals': animals, 'search_query': search_query})
+    if species_filter:
+        animals = animals.filter(species__icontains=species_filter)
+    if breed_filter:
+        animals = animals.filter(breed__icontains=breed_filter)
+
+    species_list = Animal.objects.values_list('species', flat=True).distinct()
+    breed_list = Animal.objects.values_list('breed', flat=True).distinct()
+
+    return render(request, 'adoptions/animals_list.html', {
+        'animals': animals,
+        'search_query': search_query,
+        'species_list': species_list,
+        'breed_list': breed_list,
+    })
 
 def home(request):
     return render(request, 'adoptions/home.html')
