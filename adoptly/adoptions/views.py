@@ -153,3 +153,15 @@ def delete_animal(request):
 
     animals = Animal.objects.all()  # Fetch all animals for the dropdown
     return render(request, 'adoptions/delete_animal.html', {'animals': animals})
+
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile_view(request):
+    user = request.user
+    adoption_requests = AdoptionRequest.objects.filter(email=user.email)
+    return render(request, 'adoptions/profile.html', {
+        'user': user,
+        'adoption_requests': adoption_requests
+    })

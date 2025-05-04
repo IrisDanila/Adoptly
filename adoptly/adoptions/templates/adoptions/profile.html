@@ -1,0 +1,31 @@
+{% extends 'adoptions/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Profile</h1>
+    <div class="card shadow-lg mt-4">
+        <div class="card-body">
+            <h5 class="card-title">User Details</h5>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+        </div>
+    </div>
+
+    <div class="card shadow-lg mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Submitted Adoption Requests</h5>
+            {% if adoption_requests.exists %}
+                <ul>
+                    {% for request in adoption_requests %}
+                        <li>{{ request.animal.name }} - Submitted on {{ request.created_at }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No adoption requests submitted yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -32,6 +32,7 @@
         {% if user.is_admin %}
             <a class="btn btn-light" href="{% url 'requests' %}">Requests</a>
         {% endif %}
+        <a class="btn btn-light" href="{% url 'profile' %}">Profile</a>
         <a class="btn btn-light" href="{% url 'logout' %}">Logout</a>
         <span class="status-dot green" title="Logged in"></span>
     {% else %}
