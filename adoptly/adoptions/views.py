@@ -165,3 +165,67 @@ def profile_view(request):
         'user': user,
         'adoption_requests': adoption_requests
     })
+
+
+from django.contrib.auth.decorators import user_passes_test
+from django.core.mail import send_mail
+from django.conf import settings
+
+@user_passes_test(lambda u: u.is_authenticated and u.is_admin)
+def requests_view(request):
+    adoption_requests = AdoptionRequest.objects.all()
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        action = request.POST.get('action')
+        adoption_request = get_object_or_404(AdoptionRequest, id=request_id)
+        
+        # Prepare email data
+        recipient_email = adoption_request.email
+        animal_name = adoption_request.animal.name
+        requester_name = adoption_request.name
+
+        if action == 'accept':
+            # Send acceptance email
+            subject = f"Good News! Your Adoption Request for {animal_name} has been Accepted"
+            message = f"""Hello {requester_name},
+
+We're thrilled to inform you that your adoption request for {animal_name} has been accepted! 
+
+We'll contact you shortly to arrange the next steps in the adoption process.
+
+Thank you for choosing to adopt from Adoptly!
+
+Best regards,
+The Adoptly Team
+"""
+            adoption_request.animal.delete()  # Delete the animal
+            adoption_request.delete()  # Delete the request
+            
+        elif action == 'decline':
+            # Send rejection email
+            subject = f"Update on Your Adoption Request for {animal_name}"
+            message = f"""Hello {requester_name},
+
+Thank you for your interest in adopting {animal_name}.
+
+We regret to inform you that we are unable to proceed with your adoption request at this time.
+
+We encourage you to browse our other animals who are still looking for their forever homes.
+
+Best regards,
+The Adoptly Team
+"""
+            adoption_request.delete()  # Only delete the request
+
+        # Send the email
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient_email],
+            fail_silently=False,
+        )
+
+        return redirect('requests')
+
+    return render(request, 'adoptions/requests.html', {'adoption_requests': adoption_requests})
